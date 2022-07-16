@@ -116,12 +116,14 @@ foreach (string curdir in dirs)
                     }
                     if (Directory.Exists(dir.FullName))
                     {
-                        if (Directory.Exists(tmp + @"\" + dir.Name))
-                            Directory.Delete(tmp + @"\" + dir.Name, true);
-                        Directory.Move(dir.FullName, tmp + @"\" + dir.Name);
+                        if (Directory.Exists(kextdir + @"\" + dir.Name))
+                            Directory.Delete(kextdir + @"\" + dir.Name, true);
+                        Directory.Move(dir.FullName, kextdir + @"\" + dir.Name);
                         if (Directory.Exists(tmp + @"\" + downloadName))
                         Directory.Delete(tmp + @"\" + downloadName, true);
                     }
+
+
 
                 }
             }
