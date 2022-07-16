@@ -1,6 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System.Net;
 using System.Text;
+using System.IO;
+using System.IO.Compression;
+using Microsoft.Win32;
+
 
 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://raw.githubusercontent.com/NotARobot6969/KextUpdater/master/KextUpdater/kexts.json");
 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
@@ -13,8 +17,10 @@ using (var reader = new StreamReader(response.GetResponseStream(), encoding))
 List<Kexts> kexts = JsonConvert.DeserializeObject<List<Kexts>>(kextJson);
 foreach (Kexts currentKext in kexts)
 {
+    
     string downloadName = "";
     List<string> downloadList = currentKext.Format.Split(',').ToList();
+    int versionIndex = 0;
     for (int i = 0; i < downloadList.Count; i++)
     {
         switch (downloadList[i])
@@ -23,6 +29,7 @@ foreach (Kexts currentKext in kexts)
                 downloadList[i] = "-" + currentKext.Name;
                 break;
             case "Version":
+                versionIndex = i;
                 string url = currentKext.URL + "releases/latest";
                 HttpWebRequest versionRequest = (HttpWebRequest)WebRequest.Create(url);
                 versionRequest.Method = "GET";
@@ -42,7 +49,25 @@ foreach (Kexts currentKext in kexts)
         downloadName += downloadList[i];
     }
     downloadName = downloadName.Substring(1);
-    Console.WriteLine(downloadName);
+    using (var client = new WebClient())
+    {
+        string tmp = Path.GetTempPath();
+        if (Directory.Exists(tmp + @"\" + downloadName))
+        {
+            Directory.Delete(tmp + @"\" + downloadName, true);
+        }
+        string downloadUri = currentKext.URL + "releases/download/" + downloadList[versionIndex].Substring(1) + "/" + downloadName + ".zip";
+        client.DownloadFile(downloadUri, tmp + @"\" + downloadName + ".zip");
+        ZipFile.ExtractToDirectory(tmp + @"\" + downloadName + ".zip", tmp + @"\" + downloadName);
+        DirectoryInfo directory = new DirectoryInfo(downloadName);
+        foreach (var dir in directory.EnumerateDirectories())
+        {
+            if (dir.Name.Contains("dSYM") || !dir.Name.Contains(".kext"))
+            {
+                Directory.Delete(dir.FullName, true);
+            }
+        }
+    }
 }
 class Kexts
 {
