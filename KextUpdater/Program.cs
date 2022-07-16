@@ -16,13 +16,13 @@ using Microsoft.Win32;
 Console.Write("Please drag and drop your kexts folder onto the console window: ");
 string kextdir = Console.ReadLine();
 //string kextdir = @"C:\Users\Shaun\Downloads\Lenovo-ThinkPad-X1C7-OC-Hackintosh-master(1)\Lenovo-ThinkPad-X1C7-OC-Hackintosh-master\EFI\OC\Kexts";
-if (!Directory.Exists(kextdir))
-{
-    Console.ForegroundColor = ConsoleColor.Red;
-    Console.WriteLine("Invalid directory: exiting...");
-    Console.ForegroundColor = ConsoleColor.Gray;
-    Environment.Exit(1);
-}
+// if (!Directory.Exists(kextdir))
+// {
+//     Console.ForegroundColor = ConsoleColor.Red;
+//     Console.WriteLine("Invalid directory: exiting...");
+//     Console.ForegroundColor = ConsoleColor.Gray;
+//     Environment.Exit(1);
+// }
 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://raw.githubusercontent.com/NotARobot6969/KextUpdater/master/KextUpdater/kexts.json?time=" + DateTime.Now); // i get that this is a bad
 HttpWebResponse response = (HttpWebResponse)request.GetResponse();                                                                                       // solution, github wont last
 string kextJson;                                                                                                                                         // forever but idc lol
