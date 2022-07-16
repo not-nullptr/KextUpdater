@@ -9,12 +9,6 @@
     "URL": "https://github.com/acidanthera/Lilu/",
     "Format": "Name,Version,(RELEASE)"
   },
-  // virtualsmc is commented because it doesn't work with the updater right now
-  // {
-  //   "Name": "VirtualSMC",
-  //   "URL": "https://github.com/acidanthera/VirtualSMC/",
-  //   "Format": "Name,Version,(RELEASE)"
-  // },
   {
     "Name": "AirportItlwm",
     "URL": "https://github.com/OpenIntelWireless/itlwm/",
