@@ -92,7 +92,7 @@ foreach (string curdir in dirs)
             }
             downloadName = downloadName.Substring(1);
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("DEBUG: " + downloadName);
+            // Console.WriteLine("DEBUG: " + downloadName);
             using (var client = new WebClient())
             {
                 string tmp = Path.GetTempPath() + @"\.kxttmp";
@@ -107,15 +107,20 @@ foreach (string curdir in dirs)
                 DirectoryInfo directory = new DirectoryInfo(tmp + @"\" + downloadName);
                 foreach (var dir in directory.EnumerateDirectories())
                 {
-                    if (dir.Name.Contains("dSYM") || !dir.Name.Contains(".kext"))
+                    if (dir.Name.Contains("dSYM") || !dir.Name.Contains(".kext") || dir.Name == "AppleALCU.kext")
                     {
-                        Directory.Delete(dir.FullName, true);
+                        try
+                        {
+                            Directory.Delete(dir.FullName, true);
+                        } catch { }
                     }
                     if (Directory.Exists(dir.FullName))
                     {
                         if (Directory.Exists(tmp + @"\" + dir.Name))
                             Directory.Delete(tmp + @"\" + dir.Name, true);
                         Directory.Move(dir.FullName, tmp + @"\" + dir.Name);
+                        if (Directory.Exists(tmp + @"\" + downloadName))
+                        Directory.Delete(tmp + @"\" + downloadName, true);
                     }
 
                 }
