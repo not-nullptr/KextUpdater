@@ -9,9 +9,35 @@
     "URL": "https://github.com/acidanthera/Lilu/",
     "Format": "Name,Version,(RELEASE)"
   },
+  // virtualsmc is commented because it doesn't work with the updater right now
+  // {
+  //   "Name": "VirtualSMC",
+  //   "URL": "https://github.com/acidanthera/VirtualSMC/",
+  //   "Format": "Name,Version,(RELEASE)"
+  // },
   {
-    "Name": "VirtualSMC",
-    "URL": "https://github.com/acidanthera/VirtualSMC/",
+    "Name": "AirportItlwm",
+    "URL": "https://github.com/OpenIntelWireless/itlwm/",
+    "Format": "_,v,Name,Version,(stable_Monterey.kext)"
+  },
+  {
+    "Name": "itlwm",
+    "URL": "https://github.com/OpenIntelWireless/itlwm/",
+    "Format": "_,v,(itlwm),Version,(stable.kext)"
+  },
+  {
+    "Name": "AppleALC",
+    "URL": "https://github.com/acidanthera/AppleALC/",
+    "Format": "Name,Version,(RELEASE)"
+  },
+  {
+    "Name": "IntelBluetoothFirmware",
+    "URL": "https://github.com/OpenIntelWireless/IntelBluetoothFirmware/",
+    "Format": "v,Name,Version"
+  },
+  {
+    "Name": "NVMeFix",
+    "URL": "https://github.com/acidanthera/NVMeFix/",
     "Format": "Name,Version,(RELEASE)"
   }
 ]

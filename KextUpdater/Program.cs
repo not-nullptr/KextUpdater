@@ -55,14 +55,22 @@ foreach (string curdir in dirs)
             }
             Kexts currentKext = kexts[index];
             string downloadName = "";
+            string seperator = "-";
+            string versionprefix = "";
             List<string> downloadList = kexts[index].Format.Split(',').ToList();
             int versionIndex = 0;
             for (int i = 0; i < downloadList.Count; i++)
             {
                 switch (downloadList[i])
                 {
+                    case "_":
+                        seperator = "_";
+                        break;
+                    case "v":
+                        versionprefix = "v";
+                        break;
                     case "Name":
-                        downloadList[i] = "-" + currentKext.Name;
+                        downloadList[i] = seperator + currentKext.Name;
                         break;
                     case "Version":
                         versionIndex = i;
@@ -73,7 +81,7 @@ foreach (string curdir in dirs)
                         Uri loc = versionResponse.ResponseUri;
                         string pathandquery = loc.PathAndQuery;
                         List<string> paths = pathandquery.Split("/").ToList();
-                        downloadList[i] = "-" + paths.Last();
+                        downloadList[i] = seperator + versionprefix + paths.Last();
                         break;
 
                 }
