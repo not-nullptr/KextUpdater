@@ -36,6 +36,8 @@ List<string> names = new List<string>();
 foreach (Kexts kext in kexts)
 {
     names.Add(kext.Name);
+    Console.ForegroundColor = ConsoleColor.Blue;
+    Console.WriteLine(kext.Name + " has been added to the local DB!");
 }
 
 List<string> dirs = new List<string>(Directory.EnumerateDirectories(kextdir));
@@ -65,9 +67,7 @@ foreach (string curdir in dirs)
                 {
                     case "_":
                         seperator = "_";
-                        break;
-                    case "v":
-                        versionprefix = "v";
+                        downloadList.RemoveAt(i);
                         break;
                     case "Name":
                         downloadList[i] = seperator + currentKext.Name;
@@ -92,7 +92,8 @@ foreach (string curdir in dirs)
                 }
                 downloadName += downloadList[i];
             }
-            downloadName = downloadName.Substring(1);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("DEBUG: " + downloadName);
             using (var client = new WebClient())
             {
                 string tmp = Path.GetTempPath();

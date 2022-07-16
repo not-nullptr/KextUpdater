@@ -12,12 +12,12 @@
   {
     "Name": "AirportItlwm",
     "URL": "https://github.com/OpenIntelWireless/itlwm/",
-    "Format": "_,v,Name,Version,(stable_Monterey.kext)"
+    "Format": "_,Name,Version,(stable_Monterey.kext)"
   },
   {
     "Name": "itlwm",
     "URL": "https://github.com/OpenIntelWireless/itlwm/",
-    "Format": "_,v,(itlwm),Version,(stable.kext)"
+    "Format": "_,(itlwm),Version,(stable.kext)"
   },
   {
     "Name": "AppleALC",
@@ -27,7 +27,7 @@
   {
     "Name": "IntelBluetoothFirmware",
     "URL": "https://github.com/OpenIntelWireless/IntelBluetoothFirmware/",
-    "Format": "v,Name,Version"
+    "Format": "Name,Version"
   },
   {
     "Name": "NVMeFix",
