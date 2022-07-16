@@ -2,7 +2,7 @@
 using System.Net;
 using System.Text;
 
-HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://raw.githubusercontent.com/NotARobot6969/KextUpdater/master/kexts.json");
+HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://raw.githubusercontent.com/NotARobot6969/KextUpdater/master/KextUpdater/kexts.json");
 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 string kextJson;
 var encoding = Encoding.ASCII;
