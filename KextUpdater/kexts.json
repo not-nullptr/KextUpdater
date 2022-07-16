@@ -10,11 +10,6 @@
     "Format": "-,Name,Version,(RELEASE)"
   },
   {
-    "Name": "AirportItlwm",
-    "URL": "https://github.com/OpenIntelWireless/itlwm/",
-    "Format": "_,Name,Version,(stable_Monterey.kext)"
-  },
-  {
     "Name": "itlwm",
     "URL": "https://github.com/OpenIntelWireless/itlwm/",
     "Format": "_,(itlwm),Version,(stable.kext)"

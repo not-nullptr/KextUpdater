@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Net;
 using System.Text;
+using Microsoft.VisualBasic.FileIO;
 using System.IO;
 using System.IO.Compression;
 using Microsoft.Win32;
@@ -22,7 +23,7 @@ if (!Directory.Exists(kextdir))
     Console.ForegroundColor = ConsoleColor.Gray;
     Environment.Exit(1);
 }
-HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://raw.githubusercontent.com/NotARobot6969/KextUpdater/master/KextUpdater/kexts.json"); // i get that this is a bad
+HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://raw.githubusercontent.com/NotARobot6969/KextUpdater/master/KextUpdater/kexts.json?time=" + DateTime.Now); // i get that this is a bad
 HttpWebResponse response = (HttpWebResponse)request.GetResponse();                                                                                       // solution, github wont last
 string kextJson;                                                                                                                                         // forever but idc lol
 var encoding = Encoding.ASCII;
@@ -85,7 +86,7 @@ foreach (string curdir in dirs)
                 if (downloadList[i].Substring(0, 1) == "(")
                 {
                     string replaceString = downloadList[i].Substring(1, downloadList[i].Length - 2);
-                    downloadList[i] = "-" + replaceString;
+                    downloadList[i] = seperator + replaceString;
                 }
                 downloadName += downloadList[i];
             }
@@ -94,7 +95,7 @@ foreach (string curdir in dirs)
             Console.WriteLine("DEBUG: " + downloadName);
             using (var client = new WebClient())
             {
-                string tmp = Path.GetTempPath();
+                string tmp = Path.GetTempPath() + @"\.kxttmp";
                 if (Directory.Exists(tmp + @"\" + downloadName))
                 {
                     Directory.Delete(tmp + @"\" + downloadName, true);
@@ -110,15 +111,23 @@ foreach (string curdir in dirs)
                     {
                         Directory.Delete(dir.FullName, true);
                     }
+                    if (Directory.Exists(dir.FullName))
+                    {
+                        if (Directory.Exists(tmp + @"\" + dir.Name))
+                            Directory.Delete(tmp + @"\" + dir.Name, true);
+                        Directory.Move(dir.FullName, tmp + @"\" + dir.Name);
+                    }
+
                 }
             }
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Kext " + kextName + " was updated successfully!");
 
-        } catch
+        } catch (Exception ex)
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Kext " + kextName + " was detected, but was unable to update. Please report which kext this is as a GitHub issue!");
+            Console.WriteLine(ex);
         }
     }
     else
