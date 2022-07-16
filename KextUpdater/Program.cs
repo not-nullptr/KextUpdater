@@ -13,9 +13,9 @@ using Microsoft.Win32;
 
  Authored by Not a Robot in 2022
 */
-//Console.Write("Please drag and drop your kexts folder onto the console window: ");
-// string kextdir = Console.ReadLine();
-string kextdir = @"C:\Users\Shaun\Downloads\Lenovo-ThinkPad-X1C7-OC-Hackintosh-master(1)\Lenovo-ThinkPad-X1C7-OC-Hackintosh-master\EFI\OC\Kexts";
+Console.Write("Please drag and drop your kexts folder onto the console window: ");
+string kextdir = Console.ReadLine();
+//string kextdir = @"C:\Users\Shaun\Downloads\Lenovo-ThinkPad-X1C7-OC-Hackintosh-master(1)\Lenovo-ThinkPad-X1C7-OC-Hackintosh-master\EFI\OC\Kexts";
 if (!Directory.Exists(kextdir))
 {
     Console.ForegroundColor = ConsoleColor.Red;
@@ -138,7 +138,7 @@ foreach (string curdir in dirs)
     else
     {
         Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine(kextName + " was not found in the JSON list. Please create a pull request to add it or an issue with details!");
+        Console.WriteLine(kextName + " was not found in the database. Please create a pull request to add it or an issue with details!");
     }
 }
 Console.ForegroundColor = ConsoleColor.Gray;
