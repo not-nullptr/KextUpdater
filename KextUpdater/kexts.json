@@ -2,12 +2,12 @@
   {
     "Name": "WhateverGreen",
     "URL": "https://github.com/acidanthera/WhateverGreen/",
-    "Format": "Name,Version,(RELEASE)"
+    "Format": "-,Name,Version,(RELEASE)"
   },
   {
     "Name": "Lilu",
     "URL": "https://github.com/acidanthera/Lilu/",
-    "Format": "Name,Version,(RELEASE)"
+    "Format": "-,Name,Version,(RELEASE)"
   },
   {
     "Name": "AirportItlwm",
@@ -22,16 +22,16 @@
   {
     "Name": "AppleALC",
     "URL": "https://github.com/acidanthera/AppleALC/",
-    "Format": "Name,Version,(RELEASE)"
+    "Format": "-,Name,Version,(RELEASE)"
   },
   {
     "Name": "IntelBluetoothFirmware",
     "URL": "https://github.com/OpenIntelWireless/IntelBluetoothFirmware/",
-    "Format": "Name,Version"
+    "Format": "-,Name,Version"
   },
   {
     "Name": "NVMeFix",
     "URL": "https://github.com/acidanthera/NVMeFix/",
-    "Format": "Name,Version,(RELEASE)"
+    "Format": "-,Name,Version,(RELEASE)"
   }
 ]

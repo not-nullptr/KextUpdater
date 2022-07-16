@@ -57,18 +57,15 @@ foreach (string curdir in dirs)
             }
             Kexts currentKext = kexts[index];
             string downloadName = "";
-            string seperator = "-";
             string versionprefix = "";
             List<string> downloadList = kexts[index].Format.Split(',').ToList();
+            string seperator = downloadList[0];
+            downloadList.RemoveAt(0);
             int versionIndex = 0;
             for (int i = 0; i < downloadList.Count; i++)
             {
                 switch (downloadList[i])
                 {
-                    case "_":
-                        seperator = "_";
-                        downloadList.RemoveAt(i);
-                        break;
                     case "Name":
                         downloadList[i] = seperator + currentKext.Name;
                         break;
@@ -92,6 +89,7 @@ foreach (string curdir in dirs)
                 }
                 downloadName += downloadList[i];
             }
+            downloadName = downloadName.Substring(1);
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("DEBUG: " + downloadName);
             using (var client = new WebClient())
