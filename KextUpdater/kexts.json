@@ -3,5 +3,15 @@
     "Name": "WhateverGreen",
     "URL": "https://github.com/acidanthera/WhateverGreen/",
     "Format": "Name,Version,(RELEASE)"
+  },
+  {
+    "Name": "Lilu",
+    "URL": "https://github.com/acidanthera/Lilu/",
+    "Format": "Name,Version,(RELEASE)"
+  },
+  {
+    "Name": "VirtualSMC",
+    "URL": "https://github.com/acidanthera/VirtualSMC/",
+    "Format": "Name,Version,(RELEASE)"
   }
 ]
