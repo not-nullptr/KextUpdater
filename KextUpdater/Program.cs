@@ -15,7 +15,7 @@ using Microsoft.Win32;
 */
 Console.Write("Please drag and drop your kexts folder onto the console window: ");
 string kextdir = Console.ReadLine();
-kextdir = kextdir.Replace("/", @"\");
+kextdir = kextdir.Replace("/", @"\").Trim();
 //string kextdir = @"C:\Users\Shaun\Downloads\Lenovo-ThinkPad-X1C7-OC-Hackintosh-master(1)\Lenovo-ThinkPad-X1C7-OC-Hackintosh-master\EFI\OC\Kexts";
 // if (!Directory.Exists(kextdir))
 // {
