@@ -59,7 +59,7 @@ foreach (Kexts currentKext in kexts)
         string downloadUri = currentKext.URL + "releases/download/" + downloadList[versionIndex].Substring(1) + "/" + downloadName + ".zip";
         client.DownloadFile(downloadUri, tmp + @"\" + downloadName + ".zip");
         ZipFile.ExtractToDirectory(tmp + @"\" + downloadName + ".zip", tmp + @"\" + downloadName);
-        DirectoryInfo directory = new DirectoryInfo(downloadName);
+        DirectoryInfo directory = new DirectoryInfo(tmp + @"\" + downloadName);
         foreach (var dir in directory.EnumerateDirectories())
         {
             if (dir.Name.Contains("dSYM") || !dir.Name.Contains(".kext"))
