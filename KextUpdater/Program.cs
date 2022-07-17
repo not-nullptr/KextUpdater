@@ -49,6 +49,7 @@ foreach (Kexts kext in kexts)
 List<string> dirs = new List<string>(Directory.EnumerateDirectories(kextdir));
 foreach (string curdir in dirs)
 {
+    bool supported = true;
     string fileName = $"{curdir.Substring(curdir.LastIndexOf(Path.DirectorySeparatorChar) + 1)}";
     string kextName = fileName.Substring(0, fileName.Length - 5);
     if (names.Contains(kextName)) 
@@ -85,6 +86,11 @@ foreach (string curdir in dirs)
                         string pathandquery = loc.PathAndQuery;
                         List<string> paths = pathandquery.Split("/").ToList();
                         downloadList[i] = seperator + versionprefix + paths.Last();
+                        break;
+                    case "NOSUPPORT":
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.WriteLine(kextName + " is not supported by this program because " + downloadList[i + 1]);
+                        supported = false;
                         break;
 
                 }
@@ -147,9 +153,12 @@ foreach (string curdir in dirs)
 
         } catch (Exception ex)
         {
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Kext " + kextName + " was detected, but was unable to update. Please report which kext this is as a GitHub issue!");
-            Console.WriteLine(ex);
+            if (supported)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("Kext " + kextName + " was detected, but was unable to update. Please report which kext this is as a GitHub issue!");
+                Console.WriteLine(ex);
+            }
         }
     }
     else
