@@ -85,8 +85,6 @@ foreach (string curdir in dirs)
                         List<string> paths = pathandquery.Split("/").ToList();
                         downloadList[i] = seperator + versionprefix + paths.Last();
                         break;
-                    case "NOSUPPORT":
-                        break;
 
                 }
                 if (downloadList[i].Substring(0, 1) == "(")
