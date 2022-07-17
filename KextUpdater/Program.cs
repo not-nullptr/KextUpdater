@@ -123,7 +123,7 @@ foreach (string curdir in dirs)
                         if (Directory.Exists(kextdir + @"\" + dir.Name))
                             Directory.Delete(kextdir + @"\" + dir.Name, true);
                         // Directory.Move(dir.FullName, kextdir + @"\" + dir.Name); // this causes #1, workaround is to use visual basic func FileSystem.CopyDirectory();
-                        FileSystem.CopyDirectory(dir.FullName, kextdir + @"\" + dir.Name);
+                        FileSystem.CopyDirectory(dir.FullName, kextdir + dir.Name); // we can safely assume theres no extra "\" because this issue only occurs on macOS and linux which add trailing backslashes automatically?
                         Directory.Delete(dir.FullName, true);
                         if (Directory.Exists(tmp + @"\" + downloadName))
                         Directory.Delete(tmp + @"\" + downloadName, true);
