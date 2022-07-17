@@ -28,5 +28,10 @@
     "Name": "NVMeFix",
     "URL": "https://github.com/acidanthera/NVMeFix/",
     "Format": "-,Name,Version,(RELEASE)"
+  },
+  {
+    "Name": "AirportItlwm",
+    "URL": "https://github.com/OpenIntelWireless/itlwm",
+    "Format": "_,NOSUPPORT,As it stands, AirportItlwm's file structure is very weird and would require poorly written workarounds to implement."
   }
 ]

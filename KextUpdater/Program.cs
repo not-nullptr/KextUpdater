@@ -8,8 +8,8 @@ using Microsoft.Win32;
 /*
  KextUpdater
  
- A (poorly written) tool written to update kexts (kernel extensions) on a hackintosh.
- Easily some of the worst code I have written in my life, but it seems to work.
+ A (poorly written) tool made to update kexts (kernel extensions) on a hackintosh.
+ Easily some of the worst code I have written in my life, but it seems to work sometimes.
 
  Authored by Not a Robot in 2022
 */
@@ -67,6 +67,7 @@ foreach (string curdir in dirs)
             string seperator = downloadList[0];
             downloadList.RemoveAt(0);
             int versionIndex = 0;
+            bool support = true;
             for (int i = 0; i < downloadList.Count; i++)
             {
                 switch (downloadList[i])
@@ -85,6 +86,10 @@ foreach (string curdir in dirs)
                         List<string> paths = pathandquery.Split("/").ToList();
                         downloadList[i] = seperator + versionprefix + paths.Last();
                         break;
+                    case "NOSUPPORT":
+                        Console.WriteLine("This kext is unsupported by this program for the following reason: " + downloadList[i + 1]);
+                        support = false;
+                        break;
 
                 }
                 if (downloadList[i].Substring(0, 1) == "(")
@@ -94,6 +99,8 @@ foreach (string curdir in dirs)
                 }
                 downloadName += downloadList[i];
             }
+            if (!support)
+                break;
             downloadName = downloadName.Substring(1);
             Console.ForegroundColor = ConsoleColor.Cyan;
             // Console.WriteLine("DEBUG: " + downloadName);
