@@ -70,6 +70,7 @@ foreach (string curdir in dirs)
             bool support = true;
             for (int i = 0; i < downloadList.Count; i++)
             {
+                support = true;
                 switch (downloadList[i])
                 {
                     case "Name":
@@ -87,8 +88,9 @@ foreach (string curdir in dirs)
                         downloadList[i] = seperator + versionprefix + paths.Last();
                         break;
                     case "NOSUPPORT":
-                        Console.WriteLine("This kext is unsupported by this program for the following reason: " + downloadList[i + 1]);
                         support = false;
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.WriteLine("This kext is unsupported by this program for the following reason: " + downloadList[i + 1]);
                         break;
 
                 }
@@ -99,51 +101,53 @@ foreach (string curdir in dirs)
                 }
                 downloadName += downloadList[i];
             }
-            if (!support)
-                break;
-            downloadName = downloadName.Substring(1);
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            // Console.WriteLine("DEBUG: " + downloadName);
-            using (var client = new WebClient())
+            if (support)
             {
-                string tmp = Path.GetTempPath() + @"\.kxttmp";
-                if (Directory.Exists(tmp + @"\" + downloadName))
+                downloadName = downloadName.Substring(1);
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                // Console.WriteLine("DEBUG: " + downloadName);
+                using (var client = new WebClient())
                 {
-                    Directory.Delete(tmp + @"\" + downloadName, true);
-                }
-                string downloadUri = currentKext.URL + "releases/download/" + downloadList[versionIndex].Substring(1) + "/" + downloadName + ".zip";
-                client.DownloadFile(downloadUri, tmp + @"\" + downloadName + ".zip");
-                ZipFile.ExtractToDirectory(tmp + @"\" + downloadName + ".zip", tmp + @"\" + downloadName);
-                File.Delete(tmp + @"\" + downloadName + ".zip");
-                DirectoryInfo directory = new DirectoryInfo(tmp + @"\" + downloadName);
-                foreach (var dir in directory.EnumerateDirectories())
-                {
-                    if (dir.Name.Contains("dSYM") || !dir.Name.Contains(".kext") || dir.Name == "AppleALCU.kext")
+                    string tmp = Path.GetTempPath() + @"\.kxttmp";
+                    if (Directory.Exists(tmp + @"\" + downloadName))
                     {
-                        try
-                        {
-                            Directory.Delete(dir.FullName, true);
-                        } catch { }
-                    }
-                    if (Directory.Exists(dir.FullName))
-                    {
-                        if (Directory.Exists(kextdir + @"\" + dir.Name))
-                            Directory.Delete(kextdir + @"\" + dir.Name, true);
-                        if (Directory.Exists(kextdir + dir.Name))
-                            Directory.Delete(kextdir + dir.Name, true);
-                        // Directory.Move(dir.FullName, kextdir + @"\" + dir.Name); // this causes #1, workaround is to use visual basic func FileSystem.CopyDirectory();
-                        FileSystem.CopyDirectory(dir.FullName, kextdir + dir.Name);
-                        Directory.Delete(dir.FullName, true);
-                        if (Directory.Exists(tmp + @"\" + downloadName))
                         Directory.Delete(tmp + @"\" + downloadName, true);
                     }
+                    string downloadUri = currentKext.URL + "releases/download/" + downloadList[versionIndex].Substring(1) + "/" + downloadName + ".zip";
+                    client.DownloadFile(downloadUri, tmp + @"\" + downloadName + ".zip");
+                    ZipFile.ExtractToDirectory(tmp + @"\" + downloadName + ".zip", tmp + @"\" + downloadName);
+                    File.Delete(tmp + @"\" + downloadName + ".zip");
+                    DirectoryInfo directory = new DirectoryInfo(tmp + @"\" + downloadName);
+                    foreach (var dir in directory.EnumerateDirectories())
+                    {
+                        if (dir.Name.Contains("dSYM") || !dir.Name.Contains(".kext") || dir.Name == "AppleALCU.kext")
+                        {
+                            try
+                            {
+                                Directory.Delete(dir.FullName, true);
+                            }
+                            catch { }
+                        }
+                        if (Directory.Exists(dir.FullName))
+                        {
+                            if (Directory.Exists(kextdir + @"\" + dir.Name))
+                                Directory.Delete(kextdir + @"\" + dir.Name, true);
+                            if (Directory.Exists(kextdir + dir.Name))
+                                Directory.Delete(kextdir + dir.Name, true);
+                            // Directory.Move(dir.FullName, kextdir + @"\" + dir.Name); // this causes #1, workaround is to use visual basic func FileSystem.CopyDirectory();
+                            FileSystem.CopyDirectory(dir.FullName, kextdir + dir.Name);
+                            Directory.Delete(dir.FullName, true);
+                            if (Directory.Exists(tmp + @"\" + downloadName))
+                                Directory.Delete(tmp + @"\" + downloadName, true);
+                        }
 
 
 
+                    }
                 }
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Kext " + kextName + " was updated successfully!");
             }
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Kext " + kextName + " was updated successfully!");
 
         } catch (Exception ex)
         {
