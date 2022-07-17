@@ -74,7 +74,13 @@ foreach (string curdir in dirs)
                 switch (downloadList[i])
                 {
                     case "Name":
-                        downloadList[i] = seperator + currentKext.Name;
+                        if (currentKext.Name == "BlueToolFixup")
+                        {
+                            downloadList[i] = seperator + "BcrmPatchRAM";
+                        } else
+                        {
+                            downloadList[i] = seperator + currentKext.Name;
+                        }
                         break;
                     case "Version":
                         versionIndex = i;

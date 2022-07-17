@@ -33,5 +33,10 @@
     "Name": "AirportItlwm",
     "URL": "https://github.com/OpenIntelWireless/itlwm",
     "Format": "_,NOSUPPORT,AirportItlwm's file structure is very weird and would require poorly written workarounds to implement."
+  },
+  {
+    "Name": "BlueToolFixup",
+    "URL": "https://github.com/OpenIntelWireless/itlwm",
+    "Format": "_,NOSUPPORT,AirportItlwm's file structure is very weird and would require poorly written workarounds to implement."
   }
 ]
