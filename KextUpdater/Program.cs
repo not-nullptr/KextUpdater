@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Net;
+﻿using System.Net;
+using System.Text.Json;
 using System.Text;
 using Microsoft.VisualBasic.FileIO;
 using System.IO;
@@ -13,6 +13,8 @@ using Microsoft.Win32;
 
  Authored by Not a Robot in 2022
 */
+
+
 Console.Write("Please drag and drop your kexts folder onto the console window: ");
 string kextdir = Console.ReadLine();
 if (kextdir.EndsWith(" "))
@@ -26,14 +28,14 @@ if (kextdir.EndsWith(" "))
 //     Environment.Exit(1);
 // }
 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://raw.githubusercontent.com/NotARobot6969/KextUpdater/master/KextUpdater/kexts.json?time=" + DateTime.Now); // i get that this is a bad
-HttpWebResponse response = (HttpWebResponse)request.GetResponse();                                                                                       // solution, github wont last
-string kextJson;                                                                                                                                         // forever but idc lol
+HttpWebResponse response = (HttpWebResponse)request.GetResponse();                                                                                                           // solution, github wont last
+string kextJson;                                                                                                                                                            // forever but idc lol
 var encoding = Encoding.ASCII;
 using (var reader = new StreamReader(response.GetResponseStream(), encoding))
 {
     kextJson = reader.ReadToEnd();
 }
-List<Kexts> kexts = JsonConvert.DeserializeObject<List<Kexts>>(kextJson);
+List<Kexts> kexts = JsonSerializer.Deserialize<List<Kexts>>(kextJson);
 List<string> names = new List<string>();
 
 foreach (Kexts kext in kexts)
@@ -120,7 +122,9 @@ foreach (string curdir in dirs)
                     {
                         if (Directory.Exists(kextdir + @"\" + dir.Name))
                             Directory.Delete(kextdir + @"\" + dir.Name, true);
-                        Directory.Move(dir.FullName, kextdir + @"\" + dir.Name);
+                        // Directory.Move(dir.FullName, kextdir + @"\" + dir.Name); // this causes #1, workaround is to use visual basic func FileSystem.CopyDirectory();
+                        FileSystem.CopyDirectory(dir.FullName, kextdir + @"\" + dir.Name);
+                        Directory.Delete(dir.FullName, true);
                         if (Directory.Exists(tmp + @"\" + downloadName))
                         Directory.Delete(tmp + @"\" + downloadName, true);
                     }
