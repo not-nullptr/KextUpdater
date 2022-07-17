@@ -5,13 +5,14 @@ using Microsoft.VisualBasic.FileIO;
 using System.IO;
 using System.IO.Compression;
 using Microsoft.Win32;
+using System.Runtime.InteropServices;
 /*
- KextUpdater
- 
- A (poorly written) tool made to update kexts (kernel extensions) on a hackintosh.
- Easily some of the worst code I have written in my life, but it seems to work sometimes.
+KextUpdater
 
- Authored by Not a Robot in 2022
+A (poorly written) tool made to update kexts (kernel extensions) on a hackintosh.
+Easily some of the worst code I have written in my life, but it seems to work sometimes.
+
+Authored by Not a Robot in 2022
 */
 
 
@@ -125,7 +126,13 @@ foreach (string curdir in dirs)
                         if (Directory.Exists(kextdir + dir.Name))
                             Directory.Delete(kextdir + dir.Name, true);
                         // Directory.Move(dir.FullName, kextdir + @"\" + dir.Name); // this causes #1, workaround is to use visual basic func FileSystem.CopyDirectory();
-                        FileSystem.CopyDirectory(dir.FullName, kextdir + dir.Name);
+                        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                        {
+                            FileSystem.CopyDirectory(dir.FullName, kextdir + @"\" + dir.Name);
+                        } else
+                        {
+                            FileSystem.CopyDirectory(dir.FullName, kextdir + dir.Name);
+                        }
                         Directory.Delete(dir.FullName, true);
                         if (Directory.Exists(tmp + @"\" + downloadName))
                         Directory.Delete(tmp + @"\" + downloadName, true);
