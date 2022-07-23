@@ -117,6 +117,7 @@ foreach (string curdir in dirs)
                 {
                     Directory.Delete(tmp + @"\" + downloadName, true);
                 }
+                Directory.CreateDirectory(tmp);
                 string downloadUri = currentKext.URL + "releases/download/" + downloadList[versionIndex].Substring(1) + "/" + downloadName + ".zip";
                 client.DownloadFile(downloadUri, tmp + @"\" + downloadName + ".zip");
                 ZipFile.ExtractToDirectory(tmp + @"\" + downloadName + ".zip", tmp + @"\" + downloadName);
