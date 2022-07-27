@@ -16,18 +16,16 @@ Authored by Not a Robot in 2022
 */
 
 
+/*
+Halal-Beef Patches
+
+Replace Back Slashes With Forward Slashes (Windows Path Handling Handles It Fine And Might Fix https://github.com/NotARobot6969/KextUpdater/issues/2
+*/
+
 Console.Write("Please drag and drop your kexts folder onto the console window: ");
 string kextdir = Console.ReadLine();
 if (kextdir.EndsWith(" "))
     kextdir = kextdir.Remove(kextdir.Length - 1, 1) + @"/";
-//string kextdir = @"C:\Users\Shaun\Downloads\Lenovo-ThinkPad-X1C7-OC-Hackintosh-master(1)\Lenovo-ThinkPad-X1C7-OC-Hackintosh-master\EFI\OC\Kexts";
-// if (!Directory.Exists(kextdir))
-// {
-//     Console.ForegroundColor = ConsoleColor.Red;
-//     Console.WriteLine("Invalid directory: exiting...");
-//     Console.ForegroundColor = ConsoleColor.Gray;
-//     Environment.Exit(1);
-// }
 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://raw.githubusercontent.com/NotARobot6969/KextUpdater/master/KextUpdater/kexts.json?time=" + DateTime.Now); // i get that this is a bad
 HttpWebResponse response = (HttpWebResponse)request.GetResponse();                                                                                                           // solution, github wont last
 string kextJson;                                                                                                                                                            // forever but idc lol
@@ -109,20 +107,19 @@ foreach (string curdir in dirs)
             }
             downloadName = downloadName.Substring(1);
             Console.ForegroundColor = ConsoleColor.Cyan;
-            // Console.WriteLine("DEBUG: " + downloadName);
             using (var client = new WebClient())
             {
-                string tmp = Path.GetTempPath() + @"\.kxttmp";
-                if (Directory.Exists(tmp + @"\" + downloadName))
+                string tmp = Directory.GetCurrentDirectory() + @"DownloadedKextsTemp"; //I Am Not Sure If There Is A Temp Dir In Mac OS + Wouldnt Hurt To Move To Main Program Folder
+                if (Directory.Exists(tmp + @"/" + downloadName))
                 {
-                    Directory.Delete(tmp + @"\" + downloadName, true);
+                    Directory.Delete(tmp + @"/" + downloadName, true);
                 }
                 Directory.CreateDirectory(tmp);
                 string downloadUri = currentKext.URL + "releases/download/" + downloadList[versionIndex].Substring(1) + "/" + downloadName + ".zip";
-                client.DownloadFile(downloadUri, tmp + @"\" + downloadName + ".zip");
-                ZipFile.ExtractToDirectory(tmp + @"\" + downloadName + ".zip", tmp + @"\" + downloadName);
-                File.Delete(tmp + @"\" + downloadName + ".zip");
-                DirectoryInfo directory = new DirectoryInfo(tmp + @"\" + downloadName);
+                client.DownloadFile(downloadUri, tmp + @"/" + downloadName + ".zip");
+                ZipFile.ExtractToDirectory(tmp + @"/" + downloadName + ".zip", tmp + @"/" + downloadName);
+                File.Delete(tmp + @"/" + downloadName + ".zip");
+                DirectoryInfo directory = new DirectoryInfo(tmp + @"/" + downloadName);
                 foreach (var dir in directory.EnumerateDirectories())
                 {
                     if (dir.Name.Contains("dSYM") || !dir.Name.Contains(".kext") || dir.Name == "AppleALCU.kext")
@@ -134,21 +131,21 @@ foreach (string curdir in dirs)
                     }
                     if (Directory.Exists(dir.FullName))
                     {
-                        if (Directory.Exists(kextdir + @"\" + dir.Name))
-                            Directory.Delete(kextdir + @"\" + dir.Name, true);
+                        if (Directory.Exists(kextdir + @"/" + dir.Name))
+                            Directory.Delete(kextdir + @"/" + dir.Name, true);
                         if (Directory.Exists(kextdir + dir.Name))
                             Directory.Delete(kextdir + dir.Name, true);
                         // Directory.Move(dir.FullName, kextdir + @"\" + dir.Name); // this causes #1, workaround is to use visual basic func FileSystem.CopyDirectory();
                         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                         {
-                            FileSystem.CopyDirectory(dir.FullName, kextdir + @"\" + dir.Name);
+                            FileSystem.CopyDirectory(dir.FullName, kextdir + @"/" + dir.Name);
                         } else
                         {
                             FileSystem.CopyDirectory(dir.FullName, kextdir + dir.Name);
                         }
                         Directory.Delete(dir.FullName, true);
-                        if (Directory.Exists(tmp + @"\" + downloadName))
-                        Directory.Delete(tmp + @"\" + downloadName, true);
+                        if (Directory.Exists(tmp + @"/" + downloadName))
+                        Directory.Delete(tmp + @"/" + downloadName, true);
                     }
 
 
