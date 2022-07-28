@@ -36,7 +36,7 @@
   },
   {
     "Name": "BlueToolFixup",
-    "URL": "https://github.com/OpenIntelWireless/itlwm",
+    "URL": "https://github.com/acidanthera/BrcmPatchRAM",
     "Format": "-,Name,Version,(RELEASE)"
   }
 ]
